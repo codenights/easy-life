@@ -4,7 +4,9 @@ import Link from 'next/link'
 
 import utilStyles from '../styles/utils.module.css'
 import Layout, { siteTitle } from '../components/layout'
-import { getSortedPostsData, PostData } from '../lib/posts'
+import { getSortedPostsData, PostData } from 'lib/posts'
+import Date from 'components/date'
+
 
 const Home: NextPage<{ allPostsData: PostData[] }> = ({ allPostsData }) => {
   return (
@@ -31,11 +33,13 @@ const Home: NextPage<{ allPostsData: PostData[] }> = ({ allPostsData }) => {
         <ul className={utilStyles.list}>
           {allPostsData.map(({ id, date, title }) => (
             <li className={utilStyles.listItem} key={id}>
-              {title}
+              <Link href={`/posts/${id}`}>
+                <a>{title}</a>
+              </Link>
               <br />
-              <Link href={`/posts/${id}`}><a>{id}</a></Link>
-              <br />
-              {date}
+              <small className={utilStyles.lightText}>
+                <Date dateString={date} />
+              </small>
             </li>
           ))}
         </ul>
